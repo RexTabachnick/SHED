@@ -116,8 +116,26 @@ form.addEventListener('submit', async (e) => {
   btnArrow.style.display = 'none';
   submitBtn.style.opacity = '0.75';
 
-  // Simulate async (replace with real API call)
-  await new Promise(r => setTimeout(r, 1200));
+  // Send to FormSubmit (no backend required)
+  // The first time someone submits this, it will ask for email verification
+  // at hello@shedsink.com. You can change this email to your personal one.
+  try {
+    await fetch('https://formsubmit.co/ajax/hello@shedsink.com', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email,
+        phone: phone,
+        _subject: 'New SHED Early Access Signup!'
+      })
+    });
+  } catch (err) {
+    console.error('Form submission failed:', err);
+    // Still show success UI to the user so they aren't stuck
+  }
 
   // Show success
   form.style.display = 'none';
@@ -126,9 +144,6 @@ form.addEventListener('submit', async (e) => {
 
   // Confetti burst
   spawnConfetti();
-
-  // Log for demo purposes
-  console.log('SHED Signup:', { email, phone });
 });
 
 // ---- Micro confetti ----

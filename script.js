@@ -120,7 +120,7 @@ form.addEventListener('submit', async (e) => {
   // The first time someone submits this, it will ask for email verification
   // at hello@shedsink.com. You can change this email to your personal one.
   try {
-    await fetch('https://formsubmit.co/ajax/hello@shedsink.com', {
+    await fetch('https://formsubmit.co/ajax/rextabachnick@gmail.com', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

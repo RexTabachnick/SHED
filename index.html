@@ -3,490 +3,1246 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SHED — The Sink Liner That Actually Works</title>
-  <meta name="description" content="SHED is a perforated mesh sink liner built for shaving. Water flows through. Hair doesn't. No clogged drains. No messy sink. Just the clean finish every shave deserves." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <title>Third Space — Find Your People</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --coral: #FF6B5B;
+      --coral-dark: #E85547;
+      --sand: #FFF8F0;
+      --clay: #F5EDE0;
+      --ink: #1A1A2E;
+      --ink-soft: #3D3D5C;
+      --muted: #8888A0;
+      --white: #FFFFFF;
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--white);
+      color: var(--ink);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.5px;
+    }
+
+    .logo span { color: var(--coral); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 36px;
+    }
+
+    nav ul a {
+      text-decoration: none;
+      color: var(--ink-soft);
+      font-size: 15px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    nav ul a:hover { color: var(--coral); }
+
+    .nav-cta {
+      background: var(--coral);
+      color: var(--white) !important;
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-weight: 600 !important;
+      transition: background 0.2s, transform 0.15s !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--coral-dark) !important;
+      color: var(--white) !important;
+      transform: translateY(-1px);
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 40px 80px;
+      background: var(--sand);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      right: -200px;
+      width: 700px;
+      height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,107,91,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -100px;
+      left: -100px;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,107,91,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,107,91,0.1);
+      color: var(--coral-dark);
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      margin-bottom: 24px;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--coral);
+      border-radius: 50%;
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 5vw, 66px);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--coral);
+    }
+
+    .hero p {
+      font-size: 19px;
+      color: var(--ink-soft);
+      margin-bottom: 40px;
+      max-width: 480px;
+      line-height: 1.65;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--coral);
+      color: var(--white);
+      padding: 16px 32px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(255,107,91,0.35);
+    }
+
+    .btn-primary:hover {
+      background: var(--coral-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(255,107,91,0.4);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink-soft);
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .btn-ghost:hover { color: var(--coral); }
+
+    .btn-ghost svg { transition: transform 0.2s; }
+    .btn-ghost:hover svg { transform: translateX(4px); }
+
+    .hero-social-proof {
+      margin-top: 48px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .avatars {
+      display: flex;
+    }
+
+    .avatars span {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid var(--white);
+      margin-left: -8px;
+      font-size: 17px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--clay);
+    }
+
+    .avatars span:first-child { margin-left: 0; }
+
+    .social-proof-text {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .social-proof-text strong {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    /* HERO VISUAL */
+    .hero-visual {
+      position: relative;
+    }
+
+    .cohort-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+      margin-bottom: 16px;
+      position: relative;
+      transition: transform 0.3s;
+    }
+
+    .cohort-card:hover { transform: translateY(-4px); }
+
+    .cohort-card-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .cohort-emoji {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      flex-shrink: 0;
+    }
+
+    .cohort-emoji.orange { background: rgba(255,165,0,0.12); }
+    .cohort-emoji.blue   { background: rgba(91,130,255,0.12); }
+    .cohort-emoji.green  { background: rgba(72,200,120,0.12); }
+
+    .cohort-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+
+    .cohort-subtitle {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .cohort-members {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .member-row {
+      display: flex;
+    }
+
+    .member-dot {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid var(--white);
+      margin-left: -6px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--clay);
+    }
+
+    .member-dot:first-child { margin-left: 0; }
+
+    .spots-badge {
+      background: rgba(72,200,120,0.12);
+      color: #28A058;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .cohort-card.featured {
+      background: var(--coral);
+      color: var(--white);
+    }
+
+    .cohort-card.featured .cohort-title { color: var(--white); }
+    .cohort-card.featured .cohort-subtitle { color: rgba(255,255,255,0.7); }
+    .cohort-card.featured .spots-badge {
+      background: rgba(255,255,255,0.2);
+      color: var(--white);
+    }
+
+    .week-chips {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      background: rgba(255,255,255,0.2);
+      color: var(--white);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    .floating-badge {
+      position: absolute;
+      right: -20px;
+      top: -14px;
+      background: var(--ink);
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 50px;
+      white-space: nowrap;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+
+    /* SECTION SHARED */
+    section { padding: 100px 40px; }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--coral);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: clamp(32px, 4vw, 50px);
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+
+    .section-sub {
+      font-size: 18px;
+      color: var(--ink-soft);
+      max-width: 560px;
+      line-height: 1.65;
+    }
+
+    /* HOW IT WORKS */
+    .how {
+      background: var(--sand);
+    }
+
+    .how-header {
+      text-align: center;
+      margin-bottom: 72px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      position: relative;
+    }
+
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 44px;
+      left: calc(12.5% + 28px);
+      right: calc(12.5% + 28px);
+      height: 2px;
+      background: linear-gradient(to right, var(--coral), rgba(255,107,91,0.2));
+      pointer-events: none;
+    }
+
+    .step {
+      text-align: center;
+      padding: 36px 24px 28px;
+      background: var(--white);
+      border-radius: var(--radius);
+      position: relative;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .step:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+    }
+
+    .step-number {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--coral);
+      color: var(--white);
+      font-size: 20px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-icon {
+      font-size: 32px;
+      margin-bottom: 14px;
+    }
+
+    .step h3 {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ACTIVITIES */
+    .activities-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .activity-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .activity-card {
+      border-radius: var(--radius);
+      padding: 36px 28px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.25s, box-shadow 0.25s;
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .activity-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.14);
+    }
+
+    .activity-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
+      z-index: 1;
+    }
+
+    .activity-bg {
+      position: absolute;
+      inset: 0;
+      font-size: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.25;
+    }
+
+    .activity-card:nth-child(1) { background: linear-gradient(135deg, #FF9A56, #FF6B5B); }
+    .activity-card:nth-child(2) { background: linear-gradient(135deg, #5B82FF, #8B5CF6); }
+    .activity-card:nth-child(3) { background: linear-gradient(135deg, #22C55E, #16A34A); }
+    .activity-card:nth-child(4) { background: linear-gradient(135deg, #F59E0B, #EF4444); }
+    .activity-card:nth-child(5) { background: linear-gradient(135deg, #06B6D4, #3B82F6); }
+    .activity-card:nth-child(6) { background: linear-gradient(135deg, #EC4899, #F43F5E); }
+
+    .activity-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .activity-emoji {
+      font-size: 36px;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .activity-name {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .activity-meta {
+      font-size: 13px;
+      color: rgba(255,255,255,0.75);
+      font-weight: 500;
+    }
+
+    .activity-card.wide {
+      grid-column: span 2;
+    }
+
+    /* WHY SECTION */
+    .why { background: var(--ink); color: var(--white); }
+
+    .why .section-label { color: rgba(255,107,91,0.9); }
+
+    .why .section-title { color: var(--white); }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      margin-top: 60px;
+    }
+
+    .why-features {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .why-feature {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      padding: 24px;
+      border-radius: var(--radius-sm);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .why-feature:hover {
+      background: rgba(255,107,91,0.1);
+      border-color: rgba(255,107,91,0.3);
+    }
+
+    .why-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(255,107,91,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .why-feature h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    .why-feature p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .stat-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--coral);
+      letter-spacing: -2px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.4;
+    }
+
+    /* TESTIMONIALS */
+    .testimonials { background: var(--clay); }
+
+    .testimonials-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .testimonial-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 32px;
+      position: relative;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+    }
+
+    .quote-mark {
+      font-size: 56px;
+      color: var(--coral);
+      line-height: 1;
+      margin-bottom: 12px;
+      font-family: Georgia, serif;
+    }
+
+    .testimonial-text {
+      font-size: 16px;
+      color: var(--ink-soft);
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .author-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--clay);
+      flex-shrink: 0;
+    }
+
+    .author-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .author-cohort {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* CTA */
+    .cta {
+      background: var(--coral);
+      text-align: center;
+      padding: 100px 40px;
+    }
+
+    .cta .section-label { color: rgba(255,255,255,0.7); }
+
+    .cta .section-title { color: var(--white); max-width: 700px; margin: 0 auto 20px; }
+
+    .cta .section-sub { color: rgba(255,255,255,0.8); max-width: 500px; margin: 0 auto 48px; }
+
+    .signup-form {
+      display: flex;
+      gap: 12px;
+      max-width: 480px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .signup-form input {
+      flex: 1;
+      min-width: 220px;
+      padding: 16px 22px;
+      border-radius: 50px;
+      border: none;
+      font-size: 15px;
+      outline: none;
+      background: var(--white);
+      color: var(--ink);
+    }
+
+    .signup-form input::placeholder { color: var(--muted); }
+
+    .btn-white {
+      background: var(--white);
+      color: var(--coral-dark);
+      padding: 16px 28px;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-white:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+
+    .cta-note {
+      margin-top: 16px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--ink);
+      color: rgba(255,255,255,0.5);
+      padding: 48px 40px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--white);
+    }
+
+    .footer-logo span { color: var(--coral); }
+
+    .footer-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      text-decoration: none;
+      color: rgba(255,255,255,0.45);
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--white); }
+
+    .footer-copy { font-size: 14px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav ul { display: none; }
+
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 60px;
+      }
+
+      .hero-visual { display: none; }
+
+      .steps {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .steps::before { display: none; }
+
+      .activity-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .activity-card.wide { grid-column: span 1; }
+
+      .why-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .testimonial-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      section { padding: 70px 20px; }
+      .hero { padding: 100px 20px 60px; }
+
+      .steps { grid-template-columns: 1fr; }
+
+      .activity-grid { grid-template-columns: 1fr; }
+
+      .stat-grid { grid-template-columns: 1fr 1fr; }
+
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+
+      .footer-links { flex-wrap: wrap; gap: 16px; }
+    }
+  </style>
 </head>
 <body>
 
   <!-- NAV -->
-  <nav class="nav" id="nav">
-    <div class="nav-inner">
-      <div class="nav-logo">SHED<span class="nav-logo-reg">®</span></div>
-      <a href="#signup" class="nav-cta">Get Early Access</a>
-    </div>
+  <nav>
+    <div class="logo">Third<span>Space</span></div>
+    <ul>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#activities">Activities</a></li>
+      <li><a href="#why">Why us</a></li>
+      <li><a href="#join" class="nav-cta">Join a cohort</a></li>
+    </ul>
   </nav>
 
   <!-- HERO -->
-  <section class="hero" id="hero">
-    <div class="hero-bg-text">SHED</div>
-    <div class="hero-content">
-      <div class="hero-eyebrow">
-        <span class="dot"></span>
-        Sink Liner · Men's Grooming
-        <span class="dot"></span>
-      </div>
-      <h1 class="hero-headline">
-        Water flows.<br />
-        Hair doesn't.<br />
-        <span class="headline-accent">Drain never clogs.</span>
-      </h1>
-      <p class="hero-sub">
-        SHED is a perforated mesh liner that covers your sink during every shave. 
-        Water drains right through. Every hair gets caught on top. Lift it. Toss it. 
-        The sink is spotless — the drain stays clear.
-      </p>
-      <div class="hero-product-tag">
-        <span class="tag-label">Micro-perforated &bull; Full-coverage &bull; Water-draining &bull; Hair-trapping</span>
-      </div>
-      <a href="#signup" class="btn-primary hero-btn">
-        Try 30 Liners — $9
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
-    <div class="hero-visual">
-      <div class="product-card">
-        <div class="sheet-illustration">
-          <!-- Animated mesh liner illustration -->
-          <div class="mesh-liner">
-            <div class="mesh-perf-grid" id="meshGrid"></div>
-            <div class="mesh-drain-hole"></div>
-            <div class="mesh-brand">SHED<sup>®</sup></div>
-            <div class="mesh-water-drops">
-              <div class="water-drop wd1"></div>
-              <div class="water-drop wd2"></div>
-              <div class="water-drop wd3"></div>
-            </div>
-            <div class="mesh-hair-group">
-              <svg viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg" class="hair-svg">
-                <path d="M40 25 C32 18, 24 12, 16 22 C8 32, 18 38, 26 30 C34 22, 42 18, 52 26 C62 34, 56 44, 46 36" stroke="#2a2a2a" stroke-width="0.9" stroke-linecap="round" opacity="0.55"/>
-                <path d="M36 28 C46 18, 54 26, 50 36 C46 46, 36 40, 38 32" stroke="#2a2a2a" stroke-width="0.9" stroke-linecap="round" opacity="0.45"/>
-                <path d="M30 30 C22 24, 26 38, 36 36" stroke="#2a2a2a" stroke-width="0.8" stroke-linecap="round" opacity="0.4"/>
-                <path d="M44 22 C54 14, 64 22, 60 34 C56 46, 44 40, 48 30" stroke="#2a2a2a" stroke-width="0.9" stroke-linecap="round" opacity="0.45"/>
-                <path d="M34 32 C26 28, 20 36, 28 42 C36 48, 44 36, 40 30" stroke="#2a2a2a" stroke-width="0.8" stroke-linecap="round" opacity="0.4"/>
-                <path d="M42 20 C50 26, 46 36, 38 34 C30 32, 34 22, 42 20" stroke="#2a2a2a" stroke-width="0.7" stroke-linecap="round" opacity="0.35"/>
-              </svg>
-            </div>
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-badge">Now open in your city</div>
+        <h1>Make friends<br/>doing things<br/>you <em>actually love</em></h1>
+        <p>Third Space matches you with a small group of people who share your interests — then gives you 4 weeks of shared activities to turn strangers into real friends.</p>
+        <div class="hero-actions">
+          <a href="#join" class="btn-primary">Find your cohort</a>
+          <a href="#how" class="btn-ghost">
+            See how it works
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+        <div class="hero-social-proof">
+          <div class="avatars">
+            <span>🧑</span><span>👩</span><span>🧑‍🦱</span><span>👨‍🦰</span><span>👩‍🦳</span>
+          </div>
+          <div class="social-proof-text">
+            Joined by <strong>2,400+ people</strong> in the past 6 months
           </div>
         </div>
-        <div class="product-specs">
-          <span>30 LINERS</span>
-          <span class="spec-dot">•</span>
-          <span>SHIPS FLAT</span>
-          <span class="spec-dot">•</span>
-          <span>$9</span>
-        </div>
       </div>
-    </div>
-    <div class="scroll-hint">
-      <div class="scroll-line"></div>
-      <span>scroll</span>
-    </div>
-  </section>
 
-  <!-- THE REAL PROBLEM -->
-  <section class="section problem-section" id="problem">
-    <div class="container">
-      <div class="problem-grid">
-        <div class="problem-label">Two problems. One product.</div>
-        <div class="problem-statements">
-          <div class="problem-item" data-animate>
-            <div class="problem-number">01</div>
-            <p>Hair in the drain is a slow disaster. Every shave pushes more clippings into the pipes. You don't feel it until the water stops draining and you're elbow-deep in it.</p>
+      <div class="hero-visual">
+        <div class="cohort-card featured" style="position:relative;">
+          <div class="floating-badge">🔥 Filling fast</div>
+          <div class="cohort-card-header">
+            <div class="cohort-emoji orange">💃</div>
+            <div>
+              <div class="cohort-title">Salsa Sundays</div>
+              <div class="cohort-subtitle">Starts June 22 · 4 weeks · Los Angeles</div>
+            </div>
           </div>
-          <div class="problem-item" data-animate>
-            <div class="problem-number">02</div>
-            <p>A paper towel blocks the drain. Nothing drains. The water pools, the towel soaks through, and the hair sticks to everything. You fix one problem and create three more.</p>
+          <div class="cohort-members">
+            <div class="member-row">
+              <div class="member-dot">🧑</div>
+              <div class="member-dot">👩</div>
+              <div class="member-dot">👨</div>
+              <div class="member-dot">👩‍🦱</div>
+              <div class="member-dot">+2</div>
+            </div>
+            <div class="spots-badge">2 spots left</div>
           </div>
-          <div class="problem-item" data-animate>
-            <div class="problem-number">03</div>
-            <p>You've earned the right to a clean shave — start to finish. The razor does its job. The cream does its job. The sink cleanup should be just as sorted.</p>
+          <div class="week-chips">
+            <span class="chip">Week 1: Basics</span>
+            <span class="chip">Week 2: Patterns</span>
+            <span class="chip">Week 3: Social night</span>
+            <span class="chip">Week 4: Showcase</span>
           </div>
         </div>
-      </div>
-      <div class="divider-text" data-animate>
-        <span>Water needs to drain.</span>
-        <span class="divider-accent">Hair needs to stay.</span>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="cohort-card" style="margin:0;">
+            <div class="cohort-card-header" style="margin-bottom:12px;">
+              <div class="cohort-emoji blue">🏄</div>
+              <div>
+                <div class="cohort-title">Dawn Patrol Surf</div>
+                <div class="cohort-subtitle">Malibu · Starting soon</div>
+              </div>
+            </div>
+            <div class="member-row">
+              <div class="member-dot">👨‍🦰</div>
+              <div class="member-dot">👩</div>
+              <div class="member-dot">🧑‍🦱</div>
+            </div>
+          </div>
+          <div class="cohort-card" style="margin:0;">
+            <div class="cohort-card-header" style="margin-bottom:12px;">
+              <div class="cohort-emoji green">🧗</div>
+              <div>
+                <div class="cohort-title">Climb Club</div>
+                <div class="cohort-subtitle">Brooklyn · 4 spots</div>
+              </div>
+            </div>
+            <div class="member-row">
+              <div class="member-dot">👩‍🦳</div>
+              <div class="member-dot">👨</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- HOW IT WORKS -->
-  <section class="section how-section" id="how">
-    <div class="container">
-      <div class="section-eyebrow">How it works</div>
-      <h2 class="section-headline">Cover. Shave.<br />Lift &amp; toss.</h2>
-      <div class="steps-grid">
-        <div class="step" data-animate>
-          <div class="step-number">01</div>
-          <div class="step-icon">
-            <!-- Mesh liner flat icon -->
-            <div class="step-sheet step-sheet--mesh">
-              <div class="step-mesh-pattern"></div>
-              <div class="step-drain-center"></div>
-            </div>
-          </div>
-          <h3 class="step-title">Cover the sink.</h3>
-          <p class="step-desc">Lay the SHED liner flat in your sink. It covers the whole basin — walls to drain. No adjustment needed. It sits there while you shave.</p>
-        </div>
-        <div class="step step--arrow" data-animate>
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M6 16h20M18 8l8 8-8 8" stroke="#5C9E78" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="step" data-animate>
-          <div class="step-number">02</div>
-          <div class="step-icon">
-            <!-- Water flowing through icon -->
-            <div class="step-sheet step-sheet--flow">
-              <div class="flow-arrows">
-                <div class="flow-drop fa1"></div>
-                <div class="flow-drop fa2"></div>
-                <div class="flow-drop fa3"></div>
-              </div>
-              <div class="flow-hair-line"></div>
-            </div>
-          </div>
-          <h3 class="step-title">Water through. Hair on top.</h3>
-          <p class="step-desc">Micro-perforations let every drop of water drain freely. Hair and clippings? They're too large. They stay on the surface, exactly where you can see them.</p>
-        </div>
-        <div class="step step--arrow" data-animate>
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M6 16h20M18 8l8 8-8 8" stroke="#5C9E78" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="step" data-animate>
-          <div class="step-number">03</div>
-          <div class="step-icon">
-            <div class="step-sheet step-sheet--tossed">
-              <div class="toss-icon">
-                <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="8" y="8" width="24" height="24" rx="3" fill="#5C9E78" opacity="0.15" stroke="#5C9E78" stroke-width="1.5"/>
-                  <path d="M14 20l4 4 8-8" stroke="#5C9E78" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </div>
-          </div>
-          <h3 class="step-title">Lift it. Toss it. Done.</h3>
-          <p class="step-desc">Peel the liner off the sink. The hair comes with it — dry, contained, clean. Toss it in the bin. The sink is spotless. The drain is clear. Walk away.</p>
-        </div>
+  <section class="how" id="how">
+    <div class="section-inner">
+      <div class="how-header">
+        <div class="section-label">How it works</div>
+        <h2 class="section-title">From strangers to friends<br/>in four weeks</h2>
+        <p class="section-sub" style="margin: 0 auto;">We do the matchmaking. You do the living. Repeat the cycle, keep building your crew.</p>
       </div>
-      <div class="trim-fold-gone" data-animate>
-        <span class="tfg-word">COVER.</span>
-        <span class="tfg-word">DRAIN.</span>
-        <span class="tfg-word tfg-gone">CLEAR.</span>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-icon">🎯</div>
+          <h3>Pick your passion</h3>
+          <p>Tell us what you're into — salsa, surfing, pottery, hiking, cooking, whatever lights you up.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-icon">✨</div>
+          <h3>We match your cohort</h3>
+          <p>Our algorithm finds 6–8 people with similar vibes, schedules, and skill levels near you.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-icon">📅</div>
+          <h3>Four weeks together</h3>
+          <p>Meet every week for structured activities that get progressively more social and fun.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <div class="step-icon">🔁</div>
+          <h3>Keep going or remix</h3>
+          <p>Stay with your new friends or join a new cohort. Your social life keeps growing.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- FEATURES -->
-  <section class="section features-section" id="features">
-    <div class="container">
-      <div class="features-layout">
-        <div class="features-left">
-          <div class="section-eyebrow">The engineering</div>
-          <h2 class="section-headline">Not paper.<br />Not foam.<br />Actual mesh.</h2>
-          <p class="features-intro">SHED is built from a single-use perforated liner — engineered to solve two problems that no product ever tackled at the same time: a dry sink and a clear drain.</p>
+  <!-- ACTIVITIES -->
+  <section id="activities">
+    <div class="section-inner">
+      <div class="activities-header">
+        <div>
+          <div class="section-label">Activities</div>
+          <h2 class="section-title">Something for<br/>every kind of you</h2>
         </div>
-        <div class="features-right">
-          <div class="feature-item" data-animate>
-            <div class="feature-icon">
-              <svg viewBox="0 0 24 24" fill="none">
-                <circle cx="5" cy="5" r="1.2" fill="#5C9E78"/>
-                <circle cx="12" cy="5" r="1.2" fill="#5C9E78"/>
-                <circle cx="19" cy="5" r="1.2" fill="#5C9E78"/>
-                <circle cx="5" cy="12" r="1.2" fill="#5C9E78"/>
-                <circle cx="12" cy="12" r="1.2" fill="#5C9E78"/>
-                <circle cx="19" cy="12" r="1.2" fill="#5C9E78"/>
-                <circle cx="5" cy="19" r="1.2" fill="#5C9E78"/>
-                <circle cx="12" cy="19" r="1.2" fill="#5C9E78"/>
-                <circle cx="19" cy="19" r="1.2" fill="#5C9E78"/>
-              </svg>
-            </div>
-            <div class="feature-text">
-              <h4>Micro-perforated mesh</h4>
-              <p>Hundreds of precision holes — large enough for water to drain freely, small enough that every hair strand stays on top. No blocked drains, ever.</p>
-            </div>
+        <p class="section-sub">New activities added every month based on what our community loves.</p>
+      </div>
+      <div class="activity-grid">
+        <div class="activity-card wide">
+          <div class="activity-bg">💃</div>
+          <div class="activity-content">
+            <span class="activity-emoji">💃</span>
+            <div class="activity-name">Salsa Dancing</div>
+            <div class="activity-meta">All levels · Weekly sessions · Ends with a social night</div>
           </div>
-          <div class="feature-item" data-animate>
-            <div class="feature-icon">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3C12 3 6 7 6 13a6 6 0 0 0 12 0c0-6-6-10-6-10z" stroke="#5C9E78" stroke-width="1.5" stroke-linecap="round"/></svg>
-            </div>
-            <div class="feature-text">
-              <h4>Full-coverage basin fit</h4>
-              <p>Sized to cover your entire sink bowl, side to side. No hair escapes underneath. No partial coverage. The whole sink is protected.</p>
-            </div>
+        </div>
+        <div class="activity-card">
+          <div class="activity-bg">🏄</div>
+          <div class="activity-content">
+            <span class="activity-emoji">🏄</span>
+            <div class="activity-name">Surfing</div>
+            <div class="activity-meta">Beginners welcome · Coastal cities</div>
           </div>
-          <div class="feature-item" data-animate>
-            <div class="feature-icon">
-              <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="#5C9E78" stroke-width="1.5"/><path d="M8 12h8M12 8v8" stroke="#5C9E78" stroke-width="1.5" stroke-linecap="round"/></svg>
-            </div>
-            <div class="feature-text">
-              <h4>Water-resistant material</h4>
-              <p>The liner doesn't absorb water, go soggy, or fall apart. It stays firm and flat through your entire grooming routine. No dissolving, no mess.</p>
-            </div>
+        </div>
+        <div class="activity-card">
+          <div class="activity-bg">🧗</div>
+          <div class="activity-content">
+            <span class="activity-emoji">🧗</span>
+            <div class="activity-name">Rock Climbing</div>
+            <div class="activity-meta">Indoor & outdoor · All skill levels</div>
           </div>
-          <div class="feature-item" data-animate>
-            <div class="feature-icon">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M3 6l9-3 9 3v6c0 5-4 8-9 9-5-1-9-4-9-9V6z" stroke="#5C9E78" stroke-width="1.5" stroke-linecap="round"/></svg>
-            </div>
-            <div class="feature-text">
-              <h4>Drain protection built in</h4>
-              <p>The center aligns over any standard drain. No hair gets past the liner. Your pipes stay clear. No more drain cleaning — that's the promise.</p>
-            </div>
+        </div>
+        <div class="activity-card">
+          <div class="activity-bg">🍳</div>
+          <div class="activity-content">
+            <span class="activity-emoji">🍳</span>
+            <div class="activity-name">Cooking Club</div>
+            <div class="activity-meta">Themed cuisines each week · Share & feast</div>
+          </div>
+        </div>
+        <div class="activity-card">
+          <div class="activity-bg">🎨</div>
+          <div class="activity-content">
+            <span class="activity-emoji">🎨</span>
+            <div class="activity-name">Urban Sketching</div>
+            <div class="activity-meta">Explore the city · No experience needed</div>
+          </div>
+        </div>
+        <div class="activity-card">
+          <div class="activity-bg">🏃</div>
+          <div class="activity-content">
+            <span class="activity-emoji">🏃</span>
+            <div class="activity-name">Run Club</div>
+            <div class="activity-meta">Pace-matched groups · Weekly routes</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- VS COMPARISON -->
-  <section class="section vs-section" id="vs">
-    <div class="container">
-      <div class="section-eyebrow">How it stacks up</div>
-      <h2 class="section-headline">Finally, something<br />built for this.</h2>
-      <div class="vs-table" data-animate>
-        <div class="vs-header">
-          <div class="vs-col vs-col-feature"></div>
-          <div class="vs-col vs-col-old">Paper Towel</div>
-          <div class="vs-col vs-col-old">Bare Sink</div>
-          <div class="vs-col vs-col-shed">SHED</div>
+  <!-- WHY -->
+  <section class="why" id="why">
+    <div class="section-inner">
+      <div class="section-label">Why Third Space</div>
+      <h2 class="section-title" style="color:white;">Making friends as an<br/>adult is hard. We fixed it.</h2>
+      <div class="why-grid">
+        <div class="why-features">
+          <div class="why-feature">
+            <div class="why-icon">🔁</div>
+            <div>
+              <h3>Repeated contact builds real bonds</h3>
+              <p>Friendship research shows proximity and repeated interaction are the key ingredients. Our 4-week structure is designed around that science.</p>
+            </div>
+          </div>
+          <div class="why-feature">
+            <div class="why-icon">🎯</div>
+            <div>
+              <h3>Shared activity = no awkward small talk</h3>
+              <p>When you're doing something together, conversation flows naturally. You bond over shared experience, not forced intros.</p>
+            </div>
+          </div>
+          <div class="why-feature">
+            <div class="why-icon">🤝</div>
+            <div>
+              <h3>Small, intentional groups</h3>
+              <p>6–8 people per cohort. Small enough to actually get to know everyone, big enough to have energy.</p>
+            </div>
+          </div>
+          <div class="why-feature">
+            <div class="why-icon">🌱</div>
+            <div>
+              <h3>Community that keeps growing</h3>
+              <p>Each cohort adds to your network. Do multiple rounds and you'll have a whole new social life within months.</p>
+            </div>
+          </div>
         </div>
-        <div class="vs-row">
-          <div class="vs-col vs-col-feature">Water drains freely</div>
-          <div class="vs-col vs-col-old"><span class="vs-no">✗</span></div>
-          <div class="vs-col vs-col-old"><span class="vs-yes-neutral">✓</span></div>
-          <div class="vs-col vs-col-shed"><span class="vs-yes">✓</span></div>
-        </div>
-        <div class="vs-row">
-          <div class="vs-col vs-col-feature">Hair stays contained</div>
-          <div class="vs-col vs-col-old"><span class="vs-meh">~</span></div>
-          <div class="vs-col vs-col-old"><span class="vs-no">✗</span></div>
-          <div class="vs-col vs-col-shed"><span class="vs-yes">✓</span></div>
-        </div>
-        <div class="vs-row">
-          <div class="vs-col vs-col-feature">Drain stays clear</div>
-          <div class="vs-col vs-col-old"><span class="vs-meh">~</span></div>
-          <div class="vs-col vs-col-old"><span class="vs-no">✗</span></div>
-          <div class="vs-col vs-col-shed"><span class="vs-yes">✓</span></div>
-        </div>
-        <div class="vs-row">
-          <div class="vs-col vs-col-feature">Doesn't get soggy</div>
-          <div class="vs-col vs-col-old"><span class="vs-no">✗</span></div>
-          <div class="vs-col vs-col-old"><span class="vs-yes-neutral">—</span></div>
-          <div class="vs-col vs-col-shed"><span class="vs-yes">✓</span></div>
-        </div>
-        <div class="vs-row">
-          <div class="vs-col vs-col-feature">Touch-free cleanup</div>
-          <div class="vs-col vs-col-old"><span class="vs-no">✗</span></div>
-          <div class="vs-col vs-col-old"><span class="vs-no">✗</span></div>
-          <div class="vs-col vs-col-shed"><span class="vs-yes">✓</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SOCIAL PROOF MARQUEE -->
-  <section class="section proof-section" id="proof">
-    <div class="container">
-      <div class="proof-marquee-wrap">
-        <div class="proof-marquee">
-          <div class="marquee-track">
-            <span class="marquee-item">"Finally solved."</span>
-            <span class="marquee-sep">—</span>
-            <span class="marquee-item">COVER. DRAIN. CLEAR.</span>
-            <span class="marquee-sep">—</span>
-            <span class="marquee-item">"My drain hasn't clogged in months."</span>
-            <span class="marquee-sep">—</span>
-            <span class="marquee-item">WATER THROUGH. HAIR ON TOP.</span>
-            <span class="marquee-sep">—</span>
-            <span class="marquee-item">"Should've existed years ago."</span>
-            <span class="marquee-sep">—</span>
-            <span class="marquee-item">CLEAN SINK. CLEAR DRAIN. EVERY SHAVE.</span>
-            <span class="marquee-sep">—</span>
-            <!-- Duplicate for loop -->
-            <span class="marquee-item">"Finally solved."</span>
-            <span class="marquee-sep">—</span>
-            <span class="marquee-item">COVER. DRAIN. CLEAR.</span>
-            <span class="marquee-sep">—</span>
-            <span class="marquee-item">"My drain hasn't clogged in months."</span>
-            <span class="marquee-sep">—</span>
-            <span class="marquee-item">WATER THROUGH. HAIR ON TOP.</span>
-            <span class="marquee-sep">—</span>
-            <span class="marquee-item">"Should've existed years ago."</span>
-            <span class="marquee-sep">—</span>
-            <span class="marquee-item">CLEAN SINK. CLEAR DRAIN. EVERY SHAVE.</span>
-            <span class="marquee-sep">—</span>
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-number">87%</div>
+            <div class="stat-label">of members stay in touch after their cohort ends</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">4.9★</div>
+            <div class="stat-label">average rating from over 600 cohort participants</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">2.4k</div>
+            <div class="stat-label">friendships formed through Third Space</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">30+</div>
+            <div class="stat-label">different activities across 8 cities</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- EXPERIENCE -->
-  <section class="section experience-section" id="experience">
-    <div class="container">
-      <div class="experience-inner" data-animate>
-        <div class="exp-quote-mark">"</div>
-        <blockquote class="exp-quote">
-          You buy the right razor.<br />
-          The right cream. You take the time.<br />
-          Your drain has been clogging<br />
-          <em>since the day you started shaving.</em>
-        </blockquote>
-        <p class="exp-attribution">That ends today.</p>
-        <div class="exp-stats">
-          <div class="exp-stat">
-            <div class="exp-stat-num">$0.30</div>
-            <div class="exp-stat-label">per clean shave &amp; clear drain</div>
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="section-inner">
+      <div class="testimonials-header">
+        <div class="section-label">Stories</div>
+        <h2 class="section-title">They showed up solo.<br/>They left with a crew.</h2>
+      </div>
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <div class="quote-mark">"</div>
+          <p class="testimonial-text">I moved to a new city at 29 knowing nobody. Three months later I have a whole friend group I actually want to hang out with — all through Third Space salsa cohorts.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">👩‍🦱</div>
+            <div>
+              <div class="author-name">Maya R.</div>
+              <div class="author-cohort">Salsa Dancing · Los Angeles</div>
+            </div>
           </div>
-          <div class="exp-stat-divider"></div>
-          <div class="exp-stat">
-            <div class="exp-stat-num">30</div>
-            <div class="exp-stat-label">liners — one month supply</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="quote-mark">"</div>
+          <p class="testimonial-text">I was skeptical — I'm not really a "join things" person. But the activity structure meant I didn't have to perform or be "on." We just surfed. Now I have Sunday plans every week.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">👨‍🦰</div>
+            <div>
+              <div class="author-name">Tom K.</div>
+              <div class="author-cohort">Dawn Patrol Surf · San Diego</div>
+            </div>
           </div>
-          <div class="exp-stat-divider"></div>
-          <div class="exp-stat">
-            <div class="exp-stat-num">0</div>
-            <div class="exp-stat-label">hairs past the liner. guaranteed.</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="quote-mark">"</div>
+          <p class="testimonial-text">As someone with social anxiety, apps that were just "go meet strangers" were terrifying. Having a built-in reason to be there — learning to cook together — made it feel safe.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">👩</div>
+            <div>
+              <div class="author-name">Priya S.</div>
+              <div class="author-cohort">Cooking Club · Brooklyn</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PRICING -->
-  <section class="section pricing-section" id="pricing">
-    <div class="container">
-      <div class="section-eyebrow">Less than a plumber's call</div>
-      <h2 class="section-headline">The cheapest fix<br />for your drain.</h2>
-      <div class="pricing-grid">
-        <div class="pricing-card" data-animate>
-          <div class="pricing-badge">Try it first</div>
-          <div class="pricing-amount">$9</div>
-          <div class="pricing-desc">30 Liners — One-time</div>
-          <ul class="pricing-features">
-            <li>
-              <svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 5" stroke="#5C9E78" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              30-day supply at daily shaving
-            </li>
-            <li>
-              <svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 5" stroke="#5C9E78" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Micro-perforated mesh, full-basin fit
-            </li>
-            <li>
-              <svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 5" stroke="#5C9E78" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Ships flat — slides in the mailbox
-            </li>
-          </ul>
-          <a href="#signup" class="btn-secondary">Start clean →</a>
-        </div>
-        <div class="pricing-card pricing-card--featured" data-animate>
-          <div class="pricing-badge pricing-badge--featured">Best value · Most popular</div>
-          <div class="pricing-amount">$7<span class="pricing-per">/mo</span></div>
-          <div class="pricing-desc">30 Liners / Month — Auto-refill</div>
-          <ul class="pricing-features">
-            <li>
-              <svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Fresh stack every month, automatic
-            </li>
-            <li>
-              <svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Never run out — never rethink it
-            </li>
-            <li>
-              <svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Cancel anytime, no questions
-            </li>
-          </ul>
-          <a href="#signup" class="btn-primary">Never clean a drain again →</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SIGNUP CTA -->
-  <section class="section signup-section" id="signup">
-    <div class="container">
-      <div class="signup-wrap">
-        <div class="signup-left">
-          <div class="section-eyebrow">Get early access</div>
-          <h2 class="signup-headline">
-            The last time<br />
-            you clean that<br />
-            <span class="signup-accent">drain by hand.</span>
-          </h2>
-          <p class="signup-sub">Drop your email and cell. Be first in line when SHED ships. A clean sink and a clear drain — you've earned both of them.</p>
-          <div class="signup-proof">
-            <div class="proof-avatars">
-              <div class="avatar av1"></div>
-              <div class="avatar av2"></div>
-              <div class="avatar av3"></div>
-            </div>
-            <span>2,400+ guys already in line</span>
-          </div>
-        </div>
-        <div class="signup-right">
-          <form class="signup-form" id="signupForm" novalidate>
-            <div class="form-group">
-              <label for="emailInput" class="form-label">Email address</label>
-              <input
-                type="email"
-                id="emailInput"
-                name="email"
-                class="form-input"
-                placeholder="you@email.com"
-                autocomplete="email"
-                required
-              />
-              <span class="form-error" id="emailError"></span>
-            </div>
-            <div class="form-group">
-              <label for="phoneInput" class="form-label">Cell number</label>
-              <input
-                type="tel"
-                id="phoneInput"
-                name="phone"
-                class="form-input"
-                placeholder="+1 (555) 000-0000"
-                autocomplete="tel"
-                required
-              />
-              <span class="form-error" id="phoneError"></span>
-            </div>
-            <button type="submit" class="btn-primary btn-full" id="submitBtn">
-              <span id="btnText">Get Early Access</span>
-              <svg id="btnArrow" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <p class="form-fine">By signing up, you agree to receive texts and emails from SHED. No spam. Unsubscribe anytime.</p>
-          </form>
-          <div class="signup-success" id="signupSuccess" aria-hidden="true">
-            <div class="success-icon">
-              <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="#5C9E78" stroke-width="2"/><path d="M14 24l7 7 13-14" stroke="#5C9E78" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            <h3 class="success-title">You're in.</h3>
-            <p class="success-sub">Your first clean shave and clear drain is on its way. We'll text and email you when SHED ships — you deserve nothing less.</p>
-          </div>
-        </div>
-      </div>
+  <!-- CTA -->
+  <section class="cta" id="join">
+    <div class="section-inner">
+      <div class="section-label">Get started</div>
+      <h2 class="section-title">Your people are out there.<br/>Let's go find them.</h2>
+      <p class="section-sub">Drop your email and we'll match you to a cohort starting near you.</p>
+      <form class="signup-form" action="https://formsubmit.co/rextabachnick@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="New Third Space cohort request!" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_next" value="https://rextabachnick.github.io/SHED/thanks.html" />
+        <input type="email" name="email" placeholder="your@email.com" required />
+        <button type="submit" class="btn-white">Find my cohort →</button>
+      </form>
+      <p class="cta-note">Free to join. No commitment. Next cohorts start in two weeks.</p>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-inner">
-        <div class="footer-logo">SHED<sup>®</sup></div>
-        <p class="footer-tagline">Clean Sinks &bull; Clear Drains &bull; 30 Liners</p>
-        <div class="footer-links">
-          <a href="#" id="privacyLink">Privacy</a>
-          <a href="#" id="termsLink">Terms</a>
-          <a href="mailto:hello@shedsink.com" id="contactLink">Contact</a>
-        </div>
-        <p class="footer-copy">&copy; 2026 SHED. All rights reserved.</p>
-      </div>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">Third<span>Space</span></div>
+      <ul class="footer-links">
+        <li><a href="#">How it works</a></li>
+        <li><a href="#">Activities</a></li>
+        <li><a href="#">Cities</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Privacy</a></li>
+      </ul>
+      <div class="footer-copy">© 2026 Third Space. All rights reserved.</div>
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    // Smooth fade-in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.step, .activity-card, .why-feature, .stat-card, .testimonial-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      observer.observe(el);
+    });
+  </script>
 </body>
 </html>
